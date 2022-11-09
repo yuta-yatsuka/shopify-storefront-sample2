@@ -396,7 +396,18 @@ QUERY;
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
         $response = curl_exec($ch);
+        $info = curl_getinfo($ch);
+        $errorNo = curl_errno($ch);
         curl_close($ch);
+
+        if($errorNo !== CURLE_OK){
+            throw new \Exception('curl error: error code is' . $errorNo);
+        }
+
+        if($info['http_code'] !== 200){
+            throw new \Exception('curl error: http code is ' . $info['http_code']);
+        }
+
         $response = json_decode($response);
 
 
