@@ -258,7 +258,7 @@ QUERY;
         $response = $this->execCurl($query);
 
         if(isset($response->errors)){
-            throw new \Exception('error',);
+            throw new \Exception('error');
         }
 
         if($response->data->node->completedAt){
