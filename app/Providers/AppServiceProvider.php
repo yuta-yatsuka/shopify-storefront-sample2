@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Service\ShopifyMultipass;
+use App\Service\ShopifyStorefrontApi;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton('shopifyStorefrontApi', function (){
+            return new ShopifyStorefrontApi();
+        });
+        $this->app->bind('ShopifyMultipass', function(){
+            return new ShopifyMultipass();
+        });
     }
 
     /**
